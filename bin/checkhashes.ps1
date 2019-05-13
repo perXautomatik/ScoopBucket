@@ -52,7 +52,7 @@ param(
 $Dir = Resolve-Path $Dir
 if ($ForceUpdate) { $Update = $true }
 # Cleanup
-if (!$UseCache) { Remove-Item "$cachedir\*HASH_CHECK*" -Force }
+if (!$UseCache) { scoop cache rm '*HASH_CHECK*' }
 
 function err ([String] $name, [String[]] $message) {
     Write-Host "$name`: " -ForegroundColor Red -NoNewline
@@ -70,15 +70,15 @@ foreach ($single in Get-ChildItem $Dir "$App.json") {
     $urls = @()
     $hashes = @()
 
-    if ($manifest.url) {
-        $manifest.url | ForEach-Object { $urls += $_ }
-        $manifest.hash | ForEach-Object { $hashes += $_ }
-    } elseif ($manifest.architecture) {
+    if ($manifest.architecture) {
         # First handle 64bit
         url $manifest '64bit' | ForEach-Object { $urls += $_ }
         hash $manifest '64bit' | ForEach-Object { $hashes += $_ }
         url $manifest '32bit' | ForEach-Object { $urls += $_ }
         hash $manifest '32bit' | ForEach-Object { $hashes += $_ }
+    } elseif ($manifest.url) {
+        $manifest.url | ForEach-Object { $urls += $_ }
+        $manifest.hash | ForEach-Object { $hashes += $_ }
     } else {
         err $name 'Manifest does not contain URL property.'
         continue

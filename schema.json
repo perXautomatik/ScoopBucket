@@ -43,15 +43,11 @@
                     "pattern": "^\\$[.[].*$",
                     "type": "string"
                 },
-                "xpath": {
-                    "type": "string"
-                },
                 "mode": {
                     "enum": [
                         "download",
                         "extract",
                         "json",
-                        "xpath",
                         "rdf",
                         "metalink",
                         "fosshub",
@@ -239,9 +235,6 @@
                         },
                         "jsonpath": {
                             "pattern": "^\\$[.[].*$",
-                            "type": "string"
-                        },
-                        "xpath": {
                             "type": "string"
                         },
                         "reverse": {
