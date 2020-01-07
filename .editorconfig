@@ -12,9 +12,16 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{[Bb][Aa][Tt],[Cc][Mm][Dd]}]
+[*.{bat,cmd,[Bb][Aa][Tt],[Cc][Mm][Dd]]
 # DOS/Win *requires* BAT/CMD files to have CRLF newlines
 end_of_line = crlf
 
-[*.{yml, yaml}]
+[[Mm]akefile{,.*}]
+# TAB-style indentation
+indent_style = tab
+
+[.git/hooks/*]
+end_of_line = lf
+
+[*.{yml,yaml}]
 indent_size = 2
