@@ -1,4 +1,4 @@
-[submodule "AHK"]
+
 path = AHK
 url = https://github.com/perXautomatik/AHK-EverydayScripts
 [submodule "AdvancedRenamer"]
