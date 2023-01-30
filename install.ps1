@@ -40,9 +40,9 @@ function Add-ScoopBucket {
     Write-Information -MessageData "Scoopbucket $name is already added."
   }
 }
-Add-ScoopBucket -Name 'MarkMichaelis' -Url 'https://github.com/MarkMichaelis/ScoopBucket'
+Add-ScoopBucket -Name 'perXautomatik' -Url 'https://github.com/perXautomatik/ScoopBucket'
 
-<#'McAfeeUninstall',#> 'OSBasePackages' | ForEach-Object {
+'OSBasePackages' | ForEach-Object {
   Write-Host "Installing $_..."
   scoop install $_
 }
