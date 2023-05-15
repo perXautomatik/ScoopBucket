@@ -1,7 +1,7 @@
 {
-    "recommendations": [
-        "EditorConfig.EditorConfig",
-        "ms-vscode.PowerShell"
+  "recommendations": [
+    "EditorConfig.EditorConfig",
+    "justerest.multi-replace"
         "fabiospampinato.vscode-terminals",
         "usernamehw.errorlens",
         "redhat.vscode-yaml",
