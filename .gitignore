@@ -1,7 +1,2 @@
-*.sublime-workspace
-*~
-._*
-page.html
-checkver-*.html
-/.cache/
-/.vagrant/
+/config/
+/profile/
