@@ -43,7 +43,7 @@ function Add-ScoopBucket {
 }
 Add-ScoopBucket -Name 'perXautomatik' -Url 'https://github.com/perXautomatik/ScoopBucket'
 
-'OSBasePackages' | ForEach-Object {
+'7zip', 'OSBasePackages','GitConfigure'  | ForEach-Object {
   Write-Host "Installing $_..."
   scoop install $_
 }
