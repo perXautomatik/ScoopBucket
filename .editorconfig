@@ -17,3 +17,12 @@ trim_trailing_whitespace = true
 indent_style = tab
 [*.{yml,yaml}]
 indent_size = 2
+
+[*.{[Bb][Aa][Tt],[Cc][Mm][Dd]}]
+# DOS/Win *requires* BAT/CMD files to have CRLF newlines
+end_of_line = crlf
+[.git/hooks/*]
+end_of_line = lf
+
+[*.{yml,yaml}]
+indent_size = 2
