@@ -1,8 +1,0 @@
-<snippet>
-	<content><![CDATA[if (!\$?) {
-	Write-Error (\$Error | Select-Object -Last 1)
-	Exit \$LastExitCode
-}]]></content>
-	<tabTrigger>posh-err</tabTrigger>
-	<scope>source.powershell</scope>
-</snippet>
