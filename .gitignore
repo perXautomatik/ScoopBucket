@@ -1,13 +1,7 @@
-autohotkey/lib
-autohotkey/dist/
-autohotkey/dist-newstyle/
-*.log
-Modules
 *.sublime-workspace
 *~
 ._*
-/.cache/
-/.vagrant/
-/checkver*
-checkver-*.html
 page.html
+checkver-*.html
+*.sfv
+#*.sha256

@@ -1,7 +1,0 @@
-Windows Registry Editor Version 5.00
-
-; Tutorial: https://www.technipages.com/disable-share-with-skype-from-context-menu
-
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked]
-@="{776DBC8D-7347-478C-8D71-791E12EF49D8}"
