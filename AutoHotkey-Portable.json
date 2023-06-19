@@ -1,0 +1,122 @@
+{
+  "architecture": {
+    "32bit": {
+      "bin": [
+        [
+          "autohotkeyu32.exe",
+          "autohotkey"
+        ],
+        "compiler/ahk2exe.exe"
+      ],
+      "shortcuts": [
+        [
+          "AutoHotkey32.exe",
+          "AutoHotkey 2",
+          "Scripts\\Default.ahk"
+        ]
+        [
+          "AutoHotkeyU32.exe",
+          "AutoHotkey/AutoHotkey"
+        ],
+        [
+          "Compiler\\Ahk2Exe.exe",
+          "AutoHotkey/Convert .ahk to .exe"
+        ],
+        [
+          "AutoHotkeyU32.exe",
+          "AutoHotkey/Window Spy",
+          "WindowSpy.ahk"
+        ]
+      ]
+    },
+    "64bit": {
+      "bin": [
+        [
+          "autohotkeyu64.exe",
+          "autohotkey"
+        ],
+        "compiler/ahk2exe.exe"
+      ],
+      "shortcuts": [
+        [
+          "AutoHotkey64.exe",
+          "AutoHotkey 2",
+          "Scripts\\Default.ahk"
+        ]
+        [
+          "AutoHotkeyU64.exe",
+          "AutoHotkey/AutoHotkey"
+        ],
+        [
+          "Compiler\\Ahk2Exe.exe",
+          "AutoHotkey/Convert .ahk to .exe"
+        ],
+        [
+          "AutoHotkeyU64.exe",
+          "AutoHotkey/Window Spy",
+          "WindowSpy.ahk"
+        ]
+      ]
+    }
+  },
+  "autoupdate": {
+    "hash": {
+      "url": "$url.sha256"
+    },
+    "url": "https://www.autohotkey.com/download/2.0/AutoHotkey_$version.zip"
+  },
+  "bin": [
+    [
+      "autohotkeyu64.exe",
+      "autohotkey"
+    ],
+    [
+      "autohotkeyu32.exe",
+      "autohotkey"
+    ],
+    "compiler/ahk2exe.exe"
+  ],
+  "changelog": "https://www.autohotkey.com/docs/AHKL_ChangeLog.htm",
+  "checkver": {
+    "regex": "(.*)",
+    "url": "https://www.autohotkey.com/download/2.0/version.txt"
+  },
+  "description": "The ultimate automation scripting language for Windows.",
+  "hash": "8f28c38a0b2af6ac96c4a7e1a2c0f296b2410f845d9aca8487843a1edac4271d",
+  "homepage": "https://www.autohotkey.com/",
+  "license": "GPL-2.0-or-later",
+  "persist": "Scripts",
+  "pre_install": [
+    "if(!(Test-Path \"$dir/Scripts\")) { New-Item \"$dir/Scripts\" -ItemType Directory | Out-Null }",
+    "if(!(Test-Path \"$dir/Scripts/Default.ahk\")) { Add-Content \"$dir/Scripts/Default.ahk\" \"SetWorkingDir A_ScriptDir\" }"
+  "shortcuts": [
+    [
+      "AutoHotkeyU64.exe",
+      "AutoHotkey/AutoHotkey"
+    ],
+    [
+      "AutoHotkeyU32.exe",
+      "AutoHotkey/AutoHotkey"
+    ],
+    [
+      "Compiler\\Ahk2Exe.exe",
+      "AutoHotkey/AutoHotkey Compiler"
+    ],
+    [
+      "Compiler\\Ahk2Exe.exe",
+      "AutoHotkey/AutoHotkey Compiler"
+    ],
+    [
+      "AutoHotkeyU64.exe",
+      "AutoHotkey/AutoHotkey WindowSpy Tool",
+      "WindowSpy.ahk"
+    ],
+    [
+      "AutoHotkeyU32.exe",
+      "AutoHotkey/AutoHotkey WindowSpy Tool",
+      "WindowSpy.ahk"
+    ]
+  ],
+  "url": "https://www.autohotkey.com/download/2.0/AutoHotkey_2.0.2.zip",
+  "version": "2.0.2"
+}

@@ -1,0 +1,53 @@
+{
+    "architecture": {
+        "32bit": {
+            "hash": "98d68c5a30f06b2181a876d5a5800b35976f604f2d6f6f1fcaf243011d987163",
+            "url": "https://7-zip.org/a/7z2300.msi"
+        },
+        "64bit": {
+            "hash": "4dc4f14ffef0691108dd93bd032248ac47dc5cc7f444699d6bb8721c1a77cd0b",
+            "url": "https://7-zip.org/a/7z2300-x64.msi"
+        }
+    },
+    "autoupdate": {
+        "architecture": {
+            "32bit": {
+                "url": "https://7-zip.org/a/7z$cleanVersion.msi"
+            },
+            "64bit": {
+                "url": "https://7-zip.org/a/7z$cleanVersion-x64.msi"
+            }
+        }
+    },
+    "bin": "7z.exe",
+    "checkver": {
+        "regex": "Download 7-Zip ([\\d.]+)",
+        "url": "https://www.7-zip.org/download.html"
+    },
+    "description": "A multi-format file archiver with high compression ratios",
+    "extract_dir": "Files\\7-Zip",
+    "homepage": "https://www.7-zip.org/",
+    "license": "LGPL-2.1-or-later,BSD-3-Clause,Proprietary",
+    "notes": [
+        "   To add Explorer context menu entries for 7-Zip,",
+        "      run 7zFM.exe",
+        "      open \"Tools\" -> \"Options\" -> \"Settings\" -> \"Show system menu\" AND",
+        "                                       \"7-Zip\" -> \"Integrate 7-Zip to shell context menu\"",
+        " "
+    ],
+    "persist": [
+        "Codecs",
+        "Formats"
+    ],
+    "shortcuts": [
+        [
+            "7zFM.exe",
+            "7-Zip"
+        ]
+    ],
+    "suggest": {
+        "7-Zip-zstd": "scoop-aoks/7-zip-zstd-aoks",
+        "modern7z": "scoop-aoks/modern7z-aoks"
+    },
+    "version": "23.00"
+}
