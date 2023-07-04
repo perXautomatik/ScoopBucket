@@ -12,10 +12,10 @@
   "autoupdate": {
     "architecture": {
       "32bit": {
-	"url": "https://www.voidtools.com/Everything-$version.x86.zip"
+        "url": "https://www.voidtools.com/Everything-$version.x86.zip"
       },
       "64bit": {
-	"url": "https://www.voidtools.com/Everything-$version.x64.zip"
+        "url": "https://www.voidtools.com/Everything-$version.x64.zip"
       }
     },
     "hash": {
@@ -49,12 +49,14 @@
     "Remove-Item -Recurse \"$([Environment]::GetFolderPath('commonstartmenu'))\\Programs\\Everything.lnk\"",
     "if (Test-Path \"$dir\\Everything64.exe\") { Rename-Item \"$dir\\Everything64.exe\" 'Everything.exe' }",
     "if (!(Test-Path \"$persist_dir\\Everything.ini\")) { Start-Process -Wait \"$dir\\Everything.exe\" -Args @('-install-config null') }",
-    "Get-ChildItem \"$persist_dir\\*\" -Include 'Bookmarks*.csv', 'Everything.lng', 'Everything*.db', 'Everything*.ini', 'Filters*.csv', 'Plugins*.ini', 'Run History*.csv', 'Search History*.csv' | Copy-Item -Destination \"$dir\" -ErrorAction SilentlyContinue",
+    "Get-ChildItem \"$persist_dir\\*\" -Include 'Bookmarks.csv', 'Everything.db', 'Everything.ini', 'Filters.csv', 'Search History.csv' | Copy-Item -Destination \"$dir\" -ErrorAction SilentlyContinue",
     "Remove-Item -Recurse \"$Env:Public\\Desktop\\Everything.lnk\"",
     "Copy-Item \"$bucketsdir\\versions\\scripts\\everything\\uninstall-context.reg\" \"$dir\\\""
   ],
   "pre_uninstall": [
     "Stop-Process -Name 'everything' -Force -ErrorAction SilentlyContinue",
+    "$service_installed_in_current_dir_via_scoop = (sc.exe qc Everything) -match $dir.Replace('\\', '\\\\')",
+    "if ($service_installed_in_current_dir_via_scoop) {",
     "if ($(Get-Service -Name Everything -ErrorAction SilentlyContinue).Status -ne 'Stopped') {",
     "    if (!(is_admin) -and $(Get-Service -Name Everything -ErrorAction SilentlyContinue)) { error 'Admin rights are required to stop Everything service'; break }",
     "    Stop-Service -Name 'Everything' -Force -ErrorAction SilentlyContinue | Out-Null",
@@ -62,9 +64,10 @@
     "if ((Get-Service -Name Everything -ErrorAction SilentlyContinue) -and ($cmd -eq 'uninstall')) {",
     "    if (!(is_admin) -and $(Get-Service -Name Everything -ErrorAction SilentlyContinue)) { error 'Admin rights are required to remove Everything service'; break }",
     "    sc.exe delete 'Everything'",
+    "    }",
     "}",
     "if ($cmd -eq 'uninstall') { reg import \"$dir\\uninstall-context.reg\" }",
-    "Get-ChildItem \"$dir\\*\" -Include 'Bookmarks*.csv', 'Everything.lng', 'Everything*.db', 'Everything*.ini', 'Filters*.csv', 'Plugins*.ini', 'Run History*.csv', 'Search History*.csv' | Copy-Item -Destination \"$persist_dir\" -ErrorAction SilentlyContinue -Force"
+    "Get-ChildItem \"$dir\\*\" -Include 'Bookmarks.csv', 'Everything.db', 'Everything.ini', 'Filters.csv', 'Search History.csv' | Copy-Item -Destination \"$persist_dir\" -ErrorAction SilentlyContinue -Force"
   ],
   "shortcuts": [
     [
