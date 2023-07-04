@@ -12,10 +12,10 @@
   "autoupdate": {
     "architecture": {
       "32bit": {
-	"url": "https://www.voidtools.com/Everything-$version.x86.zip"
+        "url": "https://www.voidtools.com/Everything-$version.x86.zip"
       },
       "64bit": {
-	"url": "https://www.voidtools.com/Everything-$version.x64.zip"
+        "url": "https://www.voidtools.com/Everything-$version.x64.zip"
       }
     },
     "hash": {
@@ -50,7 +50,7 @@
     "if (Test-Path \"$dir\\Everything64.exe\") { Rename-Item \"$dir\\Everything64.exe\" 'Everything.exe' }",
     "if (!(Test-Path \"$persist_dir\\Everything.ini\")) { Start-Process -Wait \"$dir\\Everything.exe\" -Args @('-install-config null') }",
     "Get-ChildItem \"$persist_dir\\*\" -Include 'Bookmarks*.csv', 'Everything.lng', 'Everything*.db', 'Everything*.ini', 'Filters*.csv', 'Plugins*.ini', 'Run History*.csv', 'Search History*.csv' | Copy-Item -Destination \"$dir\" -ErrorAction SilentlyContinue",
-    "Remove-Item -Recurse \"$Env:Public\\Desktop\\Everything.lnk\"",
+    "Remove-Item -Recurse \"$Env:Public\\Desktop\\Everything.lnk\""
     "Copy-Item \"$bucketsdir\\versions\\scripts\\everything\\uninstall-context.reg\" \"$dir\\\""
   ],
   "pre_uninstall": [
