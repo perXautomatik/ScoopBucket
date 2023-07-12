@@ -1,0 +1,32 @@
+{
+  "extensions": {
+    "recommendations": [           
+    "ms-vscode.powershell",
+      "jmredfern.sort-delimited-list",
+      "kentos.move-selection-to-new-file"
+    ]
+  },
+  "folders": [
+    {
+      "name": "PowerShell",
+      "path": "C:\\Users\\crbk01\\AppData\\Roaming\\Microsoft\\Windows\\PowerShell"
+    },
+    {
+      "name": "PowerShell",
+      "path": "C:\\Users\\crbk01\\Documents\\PowerShell"
+    },
+    {
+      "path": "C:\\Users\\crbk01\\AppData\\Roaming\\Microsoft\\Windows\\PowerShell\\PSReadline"
+    },
+    {
+      "path": "H:\\"
+    },
+    {
+      "path": "C:\\Users\\crbk01\\Documents\\WindowsPowerShell"
+    },
+    {
+      "path": ".."
+    }
+  ],
+  "settings": {}
+}
