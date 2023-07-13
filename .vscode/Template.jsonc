@@ -13,7 +13,7 @@
     ],
     //#endregion General Information
     //#region Requirements
-    // "depends": "MANIFEST",
+    "depends": "MANIFEST", // String or Array Of Strings
     // or Array of string
     "depends": [
         "bucket/someManifest",
@@ -55,8 +55,8 @@
     //#endregion Downloading
     //#region Extracting
     "innosetup": true,
-    "extract_dir": "FOLDER",
-    "extract_to": "folder",
+    "extract_dir": "DIRECTORY", // String or Array Of Strings
+    "extract_to": "WHERE TO PUT EXTRACTED FILES", // String or Array Of Strings
     //#endregion Extracting
     //#region Installing
     "pre_install": [ // String or Array Of Strings
@@ -67,15 +67,21 @@
         "file": "filename.exe", // Not needed to be specified if installer is downloaded file
         "args": "ARGUMENT" // String or Array Of Strings
     },
-    "post_install": "Some powershell commands executed after running installer",
-    //#region UnInstalling
+    "post_install": [ // String or Array Of Strings
+        "Some powershell commands executed after running installer"
+    ],
+    // region UnInstalling
     "uninstaller": {
         "file": "uninstaller.exe",
         "args": "ARGUMENT" // String or Array Of Strings
     },
-    //$endregion UnInstalling
-    //#endregion Installing
-    //#region Links
+    // endregion UnInstalling
+    // endregion Installing
+    // region Links
+    "persist": [ // String or Array Of Strings
+        "FOLDERTOPERSIST",
+        "FILETOPERSIST.extension"
+    ],
     "bin": [ // String or Array Of Array Of Strings
         "singlebinary.exe",
         [
@@ -86,7 +92,13 @@
             "singlebinary.exe",
             "withOtherName",
             "andSomeArguments"
-        ]
+        ],
+        [
+            "singlebinary.exe",
+            "withOtherName",
+            "", // Keep blank if none
+            "withOtherIcon.ico"
+        ],
     ],
     "shortcuts": [ // Array Of Array Of Strings (similar to bin)
         [
