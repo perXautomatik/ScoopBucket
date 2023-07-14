@@ -1,86 +1,132 @@
-# adapted from http://hg.python.org/cpython/file/2.7/Lib/getopt.py
-# argv:
-#    array of arguments
-# shortopts:
-#    string of single-letter options. options that take a parameter
-#    should be follow by ':'
-# longopts:
-#    array of strings that are long-form options. options that take
-#    a parameter should end with '='
-# returns @(opts hash, remaining_args array, error string)
-# NOTES:
-#    The first "--" in $argv, if any, will terminate all options; any
-# following arguments are treated as non-option arguments, even if
-# they begin with a hyphen. The "--" itself will not be included in
-# the returned $opts. (POSIX-compatible)
-function getopt($argv, $shortopts, $longopts) {
-    $opts = @{}; $rem = @()
+<# 
+.SYNOPSIS
+Gets the command-line options from an array of arguments.
 
+.DESCRIPTION
+Gets the command-line options from an array of arguments using the getopt.py module. Supports both short and long options.
+
+.PARAMETER Argv
+The array of arguments to parse.
+
+.PARAMETER Shortopts
+The string of single-letter options. Options that take a parameter should be followed by ':'.
+
+.PARAMETER Longopts
+The array of strings that are long-form options. Options that take a parameter should end with '='.
+
+.OUTPUTS
+System.Object[]. The getopt function returns an array of three objects: a hashtable of options and their values, an array of remaining arguments, and a string of error message (if any).
+
+.EXAMPLE
+getopt @("-a","-b","foo","--long=bar") "ab:" @("long=")
+
+This example parses the arguments using the short and long options and returns a hashtable of options and their values, an array of remaining arguments, and an empty string for error message.
+#>
+function getopt {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string[]] # The array of arguments to parse
+        $Argv,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string] # The string of single-letter options
+        $Shortopts,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string[]] # The array of long-form options
+        $Longopts
+    )
+
+    # Create a hashtable for storing the options and their values
+    $Opts = @{}
+
+    # Create an array for storing the remaining arguments
+    $Rem = @()
+
+    # Create a function for returning the error message
     function err($msg) {
-        $opts, $rem, $msg
+        $Opts, $Rem, $msg
     }
 
+    # Create a function for escaping special characters in regex patterns
     function regex_escape($str) {
         return [Regex]::Escape($str)
     }
 
-    # ensure these are arrays
-    $argv = @($argv)
-    $longopts = @($longopts)
+    # Loop through each argument in the array
+    for ($i = 0; $i -lt $Argv.Length; $i++) {
+        $Arg = $Argv[$i]
+        
+        # Skip null or non-string arguments
+        if ($null -eq $Arg -or !($Arg -is [String])) { continue }
 
-    for ($i = 0; $i -lt $argv.Length; $i++) {
-        $arg = $argv[$i]
-        if ($null -eq $arg) { continue }
-        # don't try to parse array arguments
-        if ($arg -is [Array]) { $rem += , $arg; continue }
-        if ($arg -is [Int]) { $rem += $arg; continue }
-        if ($arg -is [Decimal]) { $rem += $arg; continue }
-
-        if ($arg -eq '--') {
-            if ($i -lt $argv.Length - 1) {
-                $rem += $argv[($i + 1)..($argv.Length - 1)]
+        if ($Arg -eq '--') {
+            # Terminate all options and add the rest of the arguments to the remaining array
+            if ($i -lt $Argv.Length - 1) {
+                $Rem += $Argv[($i + 1)..($Argv.Length - 1)]
             }
             break
-        } elseif ($arg.StartsWith('--')) {
-            $name = $arg.Substring(2)
+        } elseif ($Arg.StartsWith('--')) {
+            # Parse a long option
+            $Name = $Arg.Substring(2)
 
-            $longopt = $longopts | Where-Object { $_ -match "^$name=?$" }
+            # Check if the option is valid and matches one of the long options
+            $Longopt = $Longopts | Where-Object { $_ -match "^$Name=?$" }
 
-            if ($longopt) {
-                if ($longopt.EndsWith('=')) {
-                    # requires arg
-                    if ($i -eq $argv.Length - 1) {
-                        return err "Option --$name requires an argument."
+            if ($Longopt) {
+                if ($Longopt.EndsWith('=')) {
+                    # The option requires a value
+                    if ($i -eq $Argv.Length - 1) {
+                        # No value provided
+                        return err "Option --$Name requires an argument."
                     }
-                    $opts.$name = $argv[++$i]
+                    # Add the option and its value to the hashtable
+                    $Opts.$Name = $Argv[++$i]
                 } else {
-                    $opts.$name = $true
+                    # The option does not require a value
+                    # Add the option and set its value to true in the hashtable
+                    $Opts.$Name = $true
                 }
             } else {
-                return err "Option --$name not recognized."
+                # The option is not recognized
+                return err "Option --$Name not recognized."
             }
-        } elseif ($arg.StartsWith('-') -and $arg -ne '-') {
-            for ($j = 1; $j -lt $arg.Length; $j++) {
-                $letter = $arg[$j].ToString()
+        } elseif ($Arg.StartsWith('-') -and $Arg -ne '-') {
+            # Parse a short option
+            for ($j = 1; $j -lt $Arg.Length; $j++) {
+                $Letter = $Arg[$j].ToString()
 
-                if ($shortopts -match "$(regex_escape $letter)`:?") {
-                    $shortopt = $Matches[0]
-                    if ($shortopt[1] -eq ':') {
-                        if ($j -ne $arg.Length - 1 -or $i -eq $argv.Length - 1) {
-                            return err "Option -$letter requires an argument."
+                # Check if the option is valid and matches one of the short options
+                if ($Shortopts -match "$(regex_escape $Letter):?") {
+                    $Shortopt = $Matches[0]
+                    if ($Shortopt[1] -eq ':') {
+                        # The option requires a value
+                        if ($j -ne $Arg.Length - 1 -or $i -eq $Argv.Length - 1) {
+                            # No value provided
+                            return err "Option -$Letter requires an argument."
                         }
-                        $opts.$letter = $argv[++$i]
+                        # Add the option and its value to the hashtable
+                        $Opts.$Letter = $Argv[++$i]
                     } else {
-                        $opts.$letter = $true
+                        # The option does not require a value
+                        # Add the option and set its value to true in the hashtable
+                        $Opts.$Letter = $true
                     }
                 } else {
-                    return err "Option -$letter not recognized."
+                    # The option is not recognized
+                    return err "Option -$Letter not recognized."
                 }
             }
         } else {
-            $rem += $arg
+            # Add the non-option argument to the remaining array
+            $Rem += $Arg
         }
     }
 
-    $opts, $rem
+    # Return the hashtable, the remaining array, and an empty string for error message
+    $Opts, $Rem, ""
 }
